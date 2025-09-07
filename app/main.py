@@ -12,6 +12,10 @@ from llm import LLMService
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
 
 @app.route("/")
+def loading():
+    return render_template("loading.html")
+
+@app.route("/app")
 def home():
     alerts = get_recent_alerts(5)
     return render_template("index.html", alerts=alerts)

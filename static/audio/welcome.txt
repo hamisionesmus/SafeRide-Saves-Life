@@ -1,0 +1,1 @@
+Welcome to SafeRide - Save Life, an offline-first driver assistant powered by OpenAI's GPT-OSS models. In this demonstration, I'll show you how SafeRide provides intelligent, multilingual hazard detection completely offline - no internet required.

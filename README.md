@@ -1,4 +1,4 @@
-# SafeRide - Save Life 🚗💨
+# SafeRide - Save Life
 
 **Offline-First Driver Assistant with GPT-OSS Integration**
 
@@ -6,7 +6,7 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Flask](https://img.shields.io/badge/flask-2.3+-green.svg)](https://flask.palletsprojects.com/)
 
-## 🌟 **Hackathon Submission - OpenAI Open Model Hackathon**
+## Hackathon Submission - OpenAI Open Model Hackathon
 
 **Category:** Best Local Agent - Most useful agentic application of gpt-oss with no internet access
 
@@ -15,6 +15,22 @@
 ---
 
 ## 📋 **Project Overview**
+
+**Bridging the Technology Gap in Road Safety**
+
+As technology advances, engineers focus on solving future problems by building autonomous vehicles, forgetting the current problems faced by the majority of people. But let's face reality: How many people can actually afford self-driving cars? According to industry reports, only about 1% of vehicles on the road today are autonomous or semi-autonomous. For how long will we wait for everyone to have smart self-driving cars?
+
+The truth is stark: 99% of the world's 1.4 billion vehicles are traditional cars driven by humans. In developing countries, that percentage is even higher - over 99.9%. Millions of drivers worldwide use existing vehicles that do not support self-driving capabilities, and the majority simply cannot afford the $50,000+ price premium for autonomous features. Yet, accidents continue to happen in blackspots, school zones, speed bumps, and sharp bend areas, claiming 1.3 million lives annually.
+
+**But there's hope: SafeRide can help prevent these tragedies.** By providing intelligent, affordable safety technology that works with existing vehicles, SafeRide has the potential to save countless lives and make our roads safer for everyone.
+
+**The Hidden Crisis: Road Sign Limitations**
+Despite road signs, many drivers don't spot them due to distractions, fatigue, or poor visibility. Road signs often fade over time, get stolen, or become obscured by natural calamities like heavy rain, fog, or overgrown vegetation. Even when visible, signs rely on driver compliance and awareness.
+
+SafeRide bridges this critical gap by providing offline software that alerts drivers with voice and text notifications when approaching these hazard zones. Powered by GPT-OSS, SafeRide ensures safety for the billions of drivers using traditional vehicles, working completely offline without requiring expensive autonomous technology.
+
+**Future Hardware Innovation**
+Looking ahead, SafeRide plans to develop hardware that actively limits vehicle speed in hazard zones, even if drivers attempt to accelerate. This future hardware will be a game-changer, different from existing speed limiters that only recognize general speed limits. SafeRide's hardware will intelligently detect specific hazard zones and enforce appropriate speed reductions, addressing driver ignorance - the final frontier in road safety.
 
 SafeRide is an innovative offline-first driver assistant application that leverages OpenAI's GPT-OSS models to provide real-time hazard detection, multilingual voice alerts, and intelligent route safety analysis. Built for scenarios where internet connectivity is unreliable or unavailable, SafeRide ensures driver safety through local AI processing.
 
@@ -76,8 +92,8 @@ pip package manager
 ### **Installation**
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/saferide.git
-cd saferide
+git clone https://github.com/hamisionesmus/SafeRide-Saves-Life.git
+cd SafeRide-Saves-Life
 
 # Install dependencies
 pip install -r requirements.txt
@@ -243,8 +259,8 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 ### **Development Setup**
 ```bash
 # Fork and clone
-git clone https://github.com/yourusername/saferide.git
-cd saferide
+git clone https://github.com/hamisionesmus/SafeRide-Saves-Life.git
+cd SafeRide-Saves-Life
 
 # Create virtual environment
 python -m venv venv
@@ -257,24 +273,10 @@ pip install -r requirements-dev.txt
 python -m pytest
 ```
 
----
-
-## 📄 **License**
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 🙏 **Acknowledgments**
-
-- **OpenAI** for GPT-OSS models
-- **Hugging Face** for model hosting and transformers library
-- **NVIDIA** for GPU acceleration support
-- **Open Source Community** for feedback and contributions
-
----
-
-## 📞 **Contact**
+## Contact
 
 **Project Lead**: [Your Name]
 **Email**: [your.email@example.com]
@@ -282,4 +284,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-**SafeRide - Because every life matters. 🚗❤️**"# SafeRide-Saves-Life" 
+## 🙏 **Special Thanks & Acknowledgements**
+
+**We extend our heartfelt gratitude to GPT-OSS** for making this life-saving technology possible. Without the power of GPT-OSS models running completely offline, SafeRide's intelligent hazard detection, multilingual alerts, and safety assistance would not be possible. Thank you for enabling affordable, accessible AI that can help save lives worldwide.
+
+**SafeRide - Because every life matters.** ❤️

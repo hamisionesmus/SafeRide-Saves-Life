@@ -9,6 +9,22 @@
 
 ---
 
+## 🎯 **Bridging the Technology Gap in Road Safety**
+
+As technology advances, engineers focus on solving future problems by building autonomous vehicles, forgetting the current problems faced by the majority of people. But let's face reality: How many people can actually afford self-driving cars? According to industry reports, only about 1% of vehicles on the road today are autonomous or semi-autonomous. For how long will we wait for everyone to have smart self-driving cars?
+
+The truth is stark: 99% of the world's 1.4 billion vehicles are traditional cars driven by humans. In developing countries, that percentage is even higher - over 99.9%. Millions of drivers worldwide use existing vehicles that do not support self-driving capabilities, and the majority simply cannot afford the $50,000+ price premium for autonomous features. Yet, accidents continue to happen in blackspots, school zones, speed bumps, and sharp bend areas, claiming 1.3 million lives annually.
+
+**But there's hope: SafeRide can help prevent these tragedies.** By providing intelligent, affordable safety technology that works with existing vehicles, SafeRide has the potential to save countless lives and make our roads safer for everyone.
+
+**The Hidden Crisis: Road Sign Limitations**
+Despite road signs, many drivers don't spot them due to distractions, fatigue, or poor visibility. Road signs often fade over time, get stolen, or become obscured by natural calamities like heavy rain, fog, or overgrown vegetation. Even when visible, signs rely on driver compliance and awareness.
+
+SafeRide bridges this critical gap by providing offline software that alerts drivers with voice and text notifications when approaching these hazard zones. Powered by GPT-OSS, SafeRide ensures safety for the billions of drivers using traditional vehicles, working completely offline without requiring expensive autonomous technology.
+
+**Future Hardware Innovation**
+Looking ahead, SafeRide plans to develop hardware that actively limits vehicle speed in hazard zones, even if drivers attempt to accelerate. This future hardware will be a game-changer, different from existing speed limiters that only recognize general speed limits. SafeRide's hardware will intelligently detect specific hazard zones and enforce appropriate speed reductions, addressing driver ignorance - the final frontier in road safety.
+
 ## 🎯 **Category Selection & Rationale**
 
 ### **Primary Category: Best Local Agent**
@@ -80,7 +96,7 @@ SafeRide is an offline-first driver assistant that uses GPT-OSS models to provid
 ## 💻 **Code Repository Structure**
 
 ### **Repository URL**
-[https://github.com/yourusername/saferide](https://github.com/yourusername/saferide)
+**Repository:** https://github.com/hamisionesmus/SafeRide-Saves-Life.git 
 
 ### **Key Files for Judging**
 
@@ -132,7 +148,7 @@ response = llm.model.generate(prompt, max_tokens=200, temp=0.7)
 
 ### **Quick Start**
 ```bash
-git clone https://github.com/yourusername/saferide.git
+git https://github.com/hamisionesmus/SafeRide-Saves-Life.git 
 cd saferide
 pip install -r requirements.txt
 python app/database.py  # Initialize database
@@ -209,56 +225,15 @@ gTTS==2.3.2
 - **Cost-Effective**: No ongoing internet costs
 - **Global Reach**: Multilingual support for international use
 
----
-
-## 🎯 **Judging Criteria Alignment**
-
-### **Application of GPT-OSS (25%)**
-✅ **Strong Fit**: GPT-OSS is core to alert generation, translation, and safety Q&A
-✅ **Unique Strengths**: Offline processing showcases model capabilities uniquely
-✅ **Creative Use**: Applied to critical safety domain in novel ways
-
-### **Design (20%)**
-✅ **User Experience**: Intuitive mobile-first interface
-✅ **Safety Focus**: User safety prioritized in all design decisions
-✅ **Balanced Architecture**: Well-integrated frontend/backend
-
-### **Potential Impact (25%)**
-✅ **Target Impact**: Significant for driver safety in offline scenarios
-✅ **Broader Impact**: Could influence automotive safety standards
-✅ **Scalability**: PWA approach allows global deployment
-
-### **Novelty of Idea (30%)**
-✅ **Unique Concept**: Offline-first AI driver assistant
-✅ **Market Gap**: Addresses underserved offline safety market
-✅ **Innovation**: Creative application of GPT-OSS to real-world safety
 
 ---
 
-## 🏆 **Why SafeRide Deserves to Win**
-
-### **Best Local Agent Category**
-SafeRide perfectly embodies the "Best Local Agent" category by:
-
-1. **Complete Offline Operation**: Zero internet dependency for safety features
-2. **Intelligent Agent Behavior**: Autonomous hazard detection and response
-3. **Real-world Utility**: Addresses critical safety need in offline environments
-4. **GPT-OSS Innovation**: Creative offline application of advanced AI models
-5. **Production Readiness**: Fully functional, tested, and documented system
-
-### **Broader Competition Strengths**
-- **Technical Excellence**: Clean architecture, comprehensive testing
-- **User-Centric Design**: Mobile-first, accessible, multilingual
-- **Safety Focus**: Life-saving application with real-world impact
-- **Open Source**: Transparent, community-contributable codebase
-
----
 
 ## 📞 **Contact Information**
 
-**Developer:** [Your Name]
-**Email:** [your.email@example.com]
-**GitHub:** https://github.com/yourusername/saferide
+**Developer:** Hamisi Onesmus
+**Email:** kilumohamisi@gmail.com
+**GitHub:** https://github.com/hamisionesmus/SafeRide-Saves-Life.git 
 **LinkedIn:** [Your LinkedIn Profile]
 
 **Project Repository:** https://github.com/yourusername/saferide
@@ -277,6 +252,10 @@ SafeRide perfectly embodies the "Best Local Agent" category by:
 - ✅ **GPT-OSS Integration**: Documented model usage throughout codebase
 
 ---
+
+## 🙏 **Special Thanks & Acknowledgements**
+
+**We extend our heartfelt gratitude to GPT-OSS** for making this life-saving technology possible. Without the power of GPT-OSS models running completely offline, SafeRide's intelligent hazard detection, multilingual alerts, and safety assistance would not be possible. Thank you for enabling affordable, accessible AI that can help save lives worldwide.
 
 **SafeRide - Because every life matters. 🚗❤️**
 
