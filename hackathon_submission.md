@@ -234,22 +234,10 @@ gTTS==2.3.2
 **Developer:** Hamisi Onesmus
 **Email:** kilumohamisi@gmail.com
 **GitHub:** https://github.com/hamisionesmus/SafeRide-Saves-Life.git 
-**LinkedIn:** [Your LinkedIn Profile]
+**LinkedIn:** https://www.linkedin.com/in/hamisi-onesmus-2ab59b352
 
-**Project Repository:** https://github.com/yourusername/saferide
+**Project Repository:** https://github.com/hamisionesmus/SafeRide-Saves-Life.git 
 **Live Demo:** http://localhost:8000 (when running locally)
-
----
-
-## 📋 **Submission Checklist**
-
-- ✅ **Project Description**: Comprehensive overview with technical details
-- ✅ **Code Repository**: Public GitHub repository with clear documentation
-- ✅ **Testing Instructions**: Complete setup and testing guide
-- ✅ **Video Script**: Detailed demonstration plan
-- ✅ **Category Justification**: Clear rationale for "Best Local Agent"
-- ✅ **Impact Assessment**: Safety and technical impact analysis
-- ✅ **GPT-OSS Integration**: Documented model usage throughout codebase
 
 ---
 
@@ -257,6 +245,6 @@ gTTS==2.3.2
 
 **We extend our heartfelt gratitude to GPT-OSS** for making this life-saving technology possible. Without the power of GPT-OSS models running completely offline, SafeRide's intelligent hazard detection, multilingual alerts, and safety assistance would not be possible. Thank you for enabling affordable, accessible AI that can help save lives worldwide.
 
-**SafeRide - Because every life matters. 🚗❤️**
+**SafeRide - Because every life matters. 🚗**
 
 *Submission for OpenAI Open Model Hackathon - Best Local Agent Category*
