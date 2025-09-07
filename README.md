@@ -278,9 +278,9 @@ python -m pytest
 
 ## Contact
 
-**Project Lead**: Kilu Mohamisi
+**Project Lead**: Kilumo Hamisi
 **Email**: kilumohamisi@gmail.com
-**GitHub**: [https://github.com/hamisionesmus/SafeRide-Saves-Life](https://github.com/hamisionesmus/SafeRide-Saves-Life)
+**GitHub**: https://github.com/hamisionesmus/SafeRide-Saves-Life
 
 ---
 
@@ -288,4 +288,4 @@ python -m pytest
 
 **We extend our heartfelt gratitude to GPT-OSS** for making this life-saving technology possible. Without the power of GPT-OSS models running completely offline, SafeRide's intelligent hazard detection, multilingual alerts, and safety assistance would not be possible. Thank you for enabling affordable, accessible AI that can help save lives worldwide.
 
-**SafeRide - Because every life matters.** ❤️
+**SafeRide - Because every life matters.** 
