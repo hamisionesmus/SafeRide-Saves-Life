@@ -28,7 +28,7 @@ SafeRide bridges this critical gap by providing offline software that alerts dri
 Looking ahead, SafeRide plans to develop hardware that actively limits vehicle speed in hazard zones, even if drivers attempt to accelerate. This future hardware will be a game-changer, different from existing speed limiters that only recognize general speed limits. SafeRide's hardware will intelligently detect specific hazard zones and enforce appropriate speed reductions, addressing driver ignorance - the final frontier in road safety.
 
 ### **1. Project Repository**
-- **URL:** https://github.com/yourusername/saferide
+- **URL:** https://github.com/hamisionesmus/SafeRide-Saves-Life
 - **License:** MIT License
 - **Documentation:** Comprehensive README.md
 - **Code Quality:** Clean, well-commented, production-ready
@@ -210,13 +210,13 @@ SafeRide is the perfect embodiment of a "Local Agent" because:
 
 ## 📞 **Contact & Support**
 
-**Developer:** [Your Name]  
-**Email:** [your.email@example.com]  
-**GitHub:** https://github.com/yourusername/saferide  
-**LinkedIn:** [Your LinkedIn Profile]  
+**Developer:** Kilu Mohamisi
+**Email:** kilumohamisi@gmail.com
+**GitHub:** https://github.com/hamisionesmus/SafeRide-Saves-Life
+**LinkedIn:** [Your LinkedIn Profile]
 
-**Project Repository:** https://github.com/yourusername/saferide  
-**Live Demo:** http://localhost:8000 (when running locally)  
+**Project Repository:** https://github.com/hamisionesmus/SafeRide-Saves-Life
+**Live Demo:** http://localhost:8000 (when running locally)
 
 ---
 

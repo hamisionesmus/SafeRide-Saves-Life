@@ -278,9 +278,9 @@ python -m pytest
 
 ## Contact
 
-**Project Lead**: [Your Name]
-**Email**: [your.email@example.com]
-**GitHub**: [https://github.com/yourusername/saferide](https://github.com/yourusername/saferide)
+**Project Lead**: Kilu Mohamisi
+**Email**: kilumohamisi@gmail.com
+**GitHub**: [https://github.com/hamisionesmus/SafeRide-Saves-Life](https://github.com/hamisionesmus/SafeRide-Saves-Life)
 
 ---
 

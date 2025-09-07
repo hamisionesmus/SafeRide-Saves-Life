@@ -20,8 +20,8 @@ Looking ahead, SafeRide plans to develop hardware that actively limits vehicle s
 
 ### **Step 1: Clone & Install (2 minutes)**
 ```bash
-git clone https://github.com/yourusername/saferide.git
-cd saferide
+git clone https://github.com/hamisionesmus/SafeRide-Saves-Life.git
+cd SafeRide-Saves-Life
 pip install -r requirements.txt
 ```
 
