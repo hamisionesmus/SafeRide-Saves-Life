@@ -210,29 +210,17 @@ SafeRide is the perfect embodiment of a "Local Agent" because:
 
 ## 📞 **Contact & Support**
 
-**Developer:** Kilu Mohamisi
+**Developer:** Kilumo Hamisi
 **Email:** kilumohamisi@gmail.com
 **GitHub:** https://github.com/hamisionesmus/SafeRide-Saves-Life
-**LinkedIn:** [Your LinkedIn Profile]
+**LinkedIn:** 
 
 **Project Repository:** https://github.com/hamisionesmus/SafeRide-Saves-Life
 **Live Demo:** http://localhost:8000 (when running locally)
 
 ---
 
-## 🏆 **Expected Outcomes**
 
-### **Prize Categories:**
-- 🥇 **Best Overall**: $10,000 (primary target)
-- 🤖 **Best Local Agent**: NVIDIA RTX5090 GPU (perfect fit)
-- 🌍 **For Humanity**: $5,000 (strong secondary)
-- 🎯 **Wildcard**: $5,000 (innovative application)
-
-### **Recognition Potential:**
-- OpenAI ecosystem visibility
-- NVIDIA developer community
-- Hugging Face model showcase
-- Global safety technology recognition
 
 ---
 
