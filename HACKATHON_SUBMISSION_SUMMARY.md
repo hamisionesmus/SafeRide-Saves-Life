@@ -149,71 +149,12 @@ SafeRide is the perfect embodiment of a "Local Agent" because:
 
 ---
 
-## 🏅 **Judging Criteria Optimization**
-
-### **Application of GPT-OSS (25%)**
-- ✅ Core feature: Alert generation and translation
-- ✅ Unique strength: Offline processing capability
-- ✅ Creative application: Safety domain specialization
-
-### **Design (20%)**
-- ✅ User experience: Mobile-first, intuitive interface
-- ✅ Safety focus: User safety prioritized in design
-- ✅ Technical balance: Well-integrated frontend/backend
-
-### **Potential Impact (25%)**
-- ✅ Target impact: Significant for offline driver safety
-- ✅ Broader impact: Could influence automotive safety standards
-- ✅ Scalability: PWA enables global deployment
-
-### **Novelty of Idea (30%)**
-- ✅ Unique concept: Offline-first AI driver assistant
-- ✅ Market gap: Addresses underserved offline safety market
-- ✅ Innovation: Creative GPT-OSS application to safety
-
----
-
-## 🚀 **Submission Timeline**
-
-### **Pre-Submission Checklist:**
-- ✅ Code repository created and documented
-- ✅ README.md with comprehensive documentation
-- ✅ Test suite passing all tests
-- ✅ Video script prepared
-- ✅ Submission documentation complete
-- ✅ Category rationale documented
-
-### **Final Steps:**
-1. **Create GitHub Repository** (if not already done)
-2. **Record Demonstration Video** (2:45min professional demo)
-3. **Test Complete Setup** on clean environment
-4. **Submit to Devpost** before September 12, 2025
-
----
-
-## 🎯 **Winning Strategy**
-
-### **Competitive Advantages:**
-1. **Perfect Category Fit**: Best Local Agent - no internet required
-2. **Real-World Impact**: Addresses actual safety problem
-3. **Technical Innovation**: Creative GPT-OSS offline application
-4. **Production Quality**: Complete, tested, documented system
-5. **Safety Focus**: Life-saving application with humanitarian value
-
-### **Target Judges:**
-- **Dmitry Pimenov (OpenAI)**: Appreciate offline AI innovation
-- **Vaibhav Srivastav (Hugging Face)**: Value model integration quality
-- **Mitesh Patel (NVIDIA)**: Recognize technical excellence
-- **Simon Mo (vLLM)**: See inference optimization potential
-
----
-
 ## 📞 **Contact & Support**
 
 **Developer:** Kilumo Hamisi
 **Email:** kilumohamisi@gmail.com
 **GitHub:** https://github.com/hamisionesmus/SafeRide-Saves-Life
-**LinkedIn:** 
+**LinkedIn:** https://www.linkedin.com/in/hamisi-onesmus-2ab59b352
 
 **Project Repository:** https://github.com/hamisionesmus/SafeRide-Saves-Life
 **Live Demo:** http://localhost:8000 (when running locally)
@@ -221,14 +162,11 @@ SafeRide is the perfect embodiment of a "Local Agent" because:
 ---
 
 
-
----
-
 ## 🎉 **Final Message**
 
 SafeRide represents the perfect marriage of cutting-edge AI technology and real-world safety needs. By leveraging GPT-OSS models in a completely offline environment, we've created a system that can save lives in scenarios where traditional connected systems fail.
 
-**This isn't just another AI demo - it's a life-saving innovation that could prevent accidents and save lives worldwide.**
+**Life-saving innovation that prevent accidents and save lives worldwide.**
 
 ## 🙏 **Special Thanks & Acknowledgements**
 
