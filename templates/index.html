@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SafeRide">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#2563eb">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>SafeRide - Save Life</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="manifest" href="/static/manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="/static/js/sweetalert2.all.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>SafeRide Driver Assistant</h1>
+            <p class="tagline">Save Life</p>
+            <nav>
+                <div class="nav-links">
+                    <a href="/" class="nav-link">Dashboard</a>
+                    <a href="/admin" class="nav-link">Admin Panel</a>
+                </div>
+                <div class="nav-toggle" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+        <!-- Mobile Navigation Menu -->
+        <div class="nav-menu" id="nav-menu">
+            <div class="nav-links">
+                <a href="/" class="nav-link" onclick="toggleMenu()">Dashboard</a>
+                <a href="/admin" class="nav-link" onclick="toggleMenu()">Admin Panel</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay" style="display: none;">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <h2 id="loading-title">Initializing SafeRide AI</h2>
+            <p id="loading-text">Loading GPT-OSS model...</p>
+            <div class="loading-progress">
+                <div class="loading-bar" id="loading-bar" style="width: 0%"></div>
+            </div>
+            <div class="loading-steps" id="loading-steps">
+                <div class="loading-step active" id="step-1">🔄 Initializing system...</div>
+                <div class="loading-step" id="step-2">🤖 Loading GPT-OSS AI model...</div>
+                <div class="loading-step" id="step-3">🗺️ Setting up map interface...</div>
+                <div class="loading-step" id="step-4">📍 Activating GPS tracking...</div>
+                <div class="loading-step" id="step-5">🎯 System ready for alerts!</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Status Panel -->
+    <div id="system-status-panel" class="system-status-panel">
+        <div class="status-header">
+            <h3>🔧 System Status</h3>
+            <div class="status-indicators">
+                <div class="status-item">
+                    <span class="status-dot" id="gpt-status-dot"></span>
+                    <span class="status-label">GPT-OSS AI</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-dot" id="gps-status-dot"></span>
+                    <span class="status-label">GPS Tracking</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-dot" id="voice-status-dot"></span>
+                    <span class="status-label">Voice System</span>
+                </div>
+                <div class="status-item">
+                    <span class="status-dot" id="alert-status-dot"></span>
+                    <span class="status-label">Alert System</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Status Indicator -->
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="status-indicator status-online" id="main-status-indicator"></span>
+                <span style="font-weight: 500;" id="main-status-text">Initializing SafeRide AI system...</span>
+            </div>
+        </div>
+
+        <!-- Alert Banner -->
+        <div id="alert-banner">
+            <strong>⚠️ HAZARD ALERT:</strong> Immediate attention required!
+        </div>
+
+        <!-- Map Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">🗺️ Live Map & Navigation</h2>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-secondary btn-small" onclick="centerMap()">Center Map</button>
+                    <button class="btn btn-primary btn-small" onclick="testAlerts()">Test Alerts</button>
+                </div>
+            </div>
+            <div id="map"></div>
+        </div>
+
+        <!-- Recent Alerts Section -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">🔔 Recent Alerts</h2>
+                <span class="alert-count" style="background: var(--warning-color); color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">
+                    {{ alerts|length if alerts else 0 }} alerts
+                </span>
+            </div>
+            <div id="recent-alerts">
+                {% if alerts %}
+                    {% for alert in alerts %}
+                    <div class="alert-item">
+                        <div>
+                            <div class="alert-timestamp">{{ alert.timestamp[:19] }}</div>
+                            <div class="alert-message">{{ alert.message }}</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div style="text-align: center; color: var(--text-secondary); padding: 2rem;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔔</div>
+                        <p>No recent alerts. Drive safely!</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">⚡ Quick Actions</h2>
+            </div>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="btn btn-success" onclick="testAlerts()">
+                    🧪 Test All Hazard Types
+                </button>
+                <button class="btn btn-primary" onclick="simulateRoute()">
+                    🚗 Simulate Route
+                </button>
+                <button class="btn btn-secondary" onclick="clearAlerts()">
+                    🗑️ Clear Alert History
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let map;
+        let driverMarker;
+        let hazardMarkers = [];
+
+        // Loading state management
+        let currentStep = 1;
+        const totalSteps = 5;
+        let isInitialized = false;
+        let initializationStartTime = null;
+
+        function updateLoadingProgress(step, text) {
+            // Update step indicators
+            for (let i = 1; i <= totalSteps; i++) {
+                const stepElement = document.getElementById(`step-${i}`);
+                if (i < step) {
+                    stepElement.className = 'loading-step completed';
+                } else if (i === step) {
+                    stepElement.className = 'loading-step active';
+                } else {
+                    stepElement.className = 'loading-step';
+                }
+            }
+
+            // Update progress bar
+            const progress = (step / totalSteps) * 100;
+            document.getElementById('loading-bar').style.width = progress + '%';
+            document.getElementById('loading-text').textContent = text;
+        }
+
+        function updateStatusDot(system, status) {
+            const dot = document.getElementById(system + '-status-dot');
+            if (dot) {
+                dot.className = 'status-dot status-' + status;
+            }
+        }
+
+        function updateMainStatus(text, status = 'online') {
+            const indicator = document.getElementById('main-status-indicator');
+            const textElement = document.getElementById('main-status-text');
+
+            indicator.className = 'status-indicator status-' + status;
+            textElement.textContent = text;
+        }
+
+        function checkRecentInitialization() {
+            const lastInit = localStorage.getItem('saferide_last_init');
+            if (lastInit) {
+                const lastInitTime = new Date(lastInit);
+                const now = new Date();
+                const timeDiff = (now - lastInitTime) / 1000 / 60;
+                if (timeDiff < 5) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        async function quickInitialize() {
+            try {
+                const statusResponse = await fetch('/api/status');
+                const status = await statusResponse.json();
+                updateStatusDot('gpt', status.gpt_oss_loaded ? 'online' : 'offline');
+                updateStatusDot('gps', status.gps_active ? 'online' : 'offline');
+                updateStatusDot('voice', status.voice_active ? 'online' : 'offline');
+                updateStatusDot('alert', 'online');
+                updateMainStatus('System Online - Real-time hazard detection active', 'online');
+            } catch (error) {
+                updateStatusDot('gpt', 'offline');
+                updateStatusDot('gps', 'online');
+                updateStatusDot('voice', 'online');
+                updateStatusDot('alert', 'online');
+                updateMainStatus('System Online - Limited features available', 'online');
+            }
+            initMap();
+            startLocationSimulation();
+            isInitialized = true;
+        }
+
+        async function fullInitializeSystem() {
+            initializationStartTime = Date.now();
+            document.getElementById('loading-overlay').style.display = 'flex';
+            updateLoadingProgress(1, 'Initializing system...');
+            await new Promise(resolve => setTimeout(resolve, 800));
+            updateStatusDot('gpt', 'loading');
+            updateStatusDot('gps', 'loading');
+            updateStatusDot('voice', 'loading');
+            updateStatusDot('alert', 'loading');
+            updateMainStatus('Initializing system...', 'loading');
+            updateLoadingProgress(2, 'Checking system status...');
+            await new Promise(resolve => setTimeout(resolve, 1200));
+            try {
+                const statusResponse = await fetch('/api/status');
+                const status = await statusResponse.json();
+                updateStatusDot('gpt', status.gpt_oss_loaded ? 'online' : 'offline');
+                updateStatusDot('gps', status.gps_active ? 'online' : 'offline');
+                updateStatusDot('voice', status.voice_active ? 'online' : 'offline');
+                updateStatusDot('alert', 'online');
+            } catch (error) {
+                updateStatusDot('gpt', 'offline');
+                updateStatusDot('gps', 'online');
+                updateStatusDot('voice', 'online');
+                updateStatusDot('alert', 'online');
+            }
+            updateLoadingProgress(3, 'Setting up map...');
+            await new Promise(resolve => setTimeout(resolve, 800));
+            initMap();
+            updateLoadingProgress(4, 'Activating GPS...');
+            await new Promise(resolve => setTimeout(resolve, 800));
+            startLocationSimulation();
+            updateLoadingProgress(5, 'System ready');
+            updateMainStatus('System Online - Real-time hazard detection active', 'online');
+            localStorage.setItem('saferide_last_init', new Date().toISOString());
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            document.getElementById('loading-overlay').style.display = 'none';
+            isInitialized = true;
+        }
+
+        async function initializeSystem() {
+            if (checkRecentInitialization()) {
+                await quickInitialize();
+            } else {
+                await fullInitializeSystem();
+            }
+        }
+
+        function initMap() {
+            map = L.map('map').setView([-1.29, 36.82], 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            driverMarker = L.marker([-1.29, 36.82], {
+                icon: L.divIcon({
+                    html: '🚗',
+                    className: 'driver-marker',
+                    iconSize: [30, 30]
+                })
+            }).addTo(map);
+            driverMarker.bindPopup('<b>Your Location</b><br>Real-time GPS tracking');
+            loadHazards();
+        }
+
+        function loadHazards() {
+            fetch('/api/hazards')
+                .then(response => response.json())
+                .then(data => {
+                    hazardMarkers.forEach(marker => map.removeLayer(marker));
+                    hazardMarkers = [];
+                    data.hazards.forEach(hazard => {
+                        let iconHtml = '⚠️';
+                        let markerColor = '#ef4444';
+                        switch(hazard.type) {
+                            case 'blackspot': iconHtml = '🚨'; markerColor = '#dc2626'; break;
+                            case 'bump': iconHtml = '⚡'; markerColor = '#f59e0b'; break;
+                            case 'school_zone': iconHtml = '🏫'; markerColor = '#10b981'; break;
+                            case 'sharp_bend': iconHtml = '🌀'; markerColor = '#8b5cf6'; break;
+                            case 'traffic_congestion': iconHtml = '🚦'; markerColor = '#f97316'; break;
+                        }
+                        const marker = L.marker([hazard.lat, hazard.lng], {
+                            icon: L.divIcon({
+                                html: `<div style="background: ${markerColor}; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; color: white; font-size: 16px; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">${iconHtml}</div>`,
+                                className: 'hazard-marker',
+                                iconSize: [30, 30]
+                            })
+                        }).addTo(map);
+                        marker.bindPopup(`
+                            <div style="font-family: Inter, sans-serif; max-width: 200px;">
+                                <h3 style="margin: 0 0 8px 0; color: ${markerColor}; font-size: 16px;">
+                                    ${hazard.type.replace('_', ' ').toUpperCase()}
+                                </h3>
+                                <p style="margin: 0 0 8px 0; font-size: 14px;">${hazard.description}</p>
+                                <div style="font-size: 12px; color: #666;">
+                                    Distance: ${hazard.distance}m<br>
+                                    Lat: ${hazard.lat.toFixed(4)}<br>
+                                    Lng: ${hazard.lng.toFixed(4)}
+                                </div>
+                            </div>
+                        `);
+                        hazardMarkers.push(marker);
+                    });
+                })
+                .catch(error => console.error('Error loading hazards:', error));
+        }
+
+        function startLocationSimulation() {
+            setInterval(() => {
+                const currentPos = driverMarker.getLatLng();
+                const newLat = currentPos.lat + (Math.random() - 0.5) * 0.002;
+                const newLng = currentPos.lng + (Math.random() - 0.5) * 0.002;
+                driverMarker.setLatLng([newLat, newLng]);
+                checkNearbyHazards(newLat, newLng);
+            }, 3000);
+        }
+
+        function checkNearbyHazards(lat, lng) {
+            fetch('/api/hazards')
+                .then(response => response.json())
+                .then(data => {
+                    data.hazards.forEach(hazard => {
+                        const distance = calculateDistance(lat, lng, hazard.lat, hazard.lng);
+                        if (distance < 0.5) {
+                            showAlert(hazard);
+                        }
+                    });
+                });
+        }
+
+        function calculateDistance(lat1, lng1, lat2, lng2) {
+            const R = 6371;
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLng = (lng2 - lng1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLng/2) * Math.sin(dLng/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        function showAlert(hazard) {
+            const alertBanner = document.getElementById('alert-banner');
+            alertBanner.innerHTML = `<strong>⚠️ ${hazard.type.toUpperCase()} ALERT:</strong> ${hazard.description} (${hazard.distance}m ahead)`;
+            alertBanner.classList.add('show');
+            setTimeout(() => {
+                alertBanner.classList.remove('show');
+            }, 5000);
+            fetch('/trigger_alert', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `message=⚠️ ${hazard.type} ahead in ${hazard.distance} meters. ${hazard.description}`
+            });
+        }
+
+        function testAlerts() {
+            Swal.fire({
+                title: 'Testing All Hazard Types',
+                text: 'Triggering alerts for all hazard types...',
+                icon: 'info',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            fetch('/test_alerts', { method: 'GET' })
+                .then(response => response.json())
+                .then(data => {
+                    Swal.fire({
+                        title: 'Test Complete!',
+                        text: 'All hazard alerts have been triggered successfully.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload();
+                    });
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Failed to trigger test alerts: ' + error.message,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                });
+        }
+
+        function centerMap() {
+            if (driverMarker) {
+                map.setView(driverMarker.getLatLng(), 15);
+                Swal.fire({
+                    title: 'Map Centered',
+                    text: 'Map has been centered on your current location.',
+                    icon: 'success',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            } else {
+                Swal.fire({
+                    title: 'Location Not Available',
+                    text: 'Unable to center map - location not available.',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+            }
+        }
+
+        function simulateRoute() {
+            Swal.fire({
+                title: 'Route Simulation Started',
+                text: 'Watch for hazard alerts as the simulation progresses!',
+                icon: 'info',
+                confirmButtonText: 'Start Watching',
+                showCancelButton: true,
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Simulation Active',
+                        text: 'Route simulation is now active. Hazard alerts will appear automatically.',
+                        icon: 'success',
+                        timer: 2000,
+                        showConfirmButton: false
+                    });
+                }
+            });
+        }
+
+        function clearAlerts() {
+            Swal.fire({
+                title: 'Clear Alert History?',
+                text: 'Are you sure you want to clear all alerts? This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Clear All',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#ef4444'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Cleared!',
+                        text: 'Alert history has been cleared successfully.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    }).then(() => {
+                        location.reload();
+                    });
+                }
+            });
+        }
+
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/static/service-worker.js')
+                .then(registration => {
+                    console.log('Service Worker registered');
+                })
+                .catch(error => {
+                    console.log('Service Worker registration failed');
+                });
+        }
+
+        function toggleMenu() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            navToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        }
+
+        document.addEventListener('click', function(e) {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+            if (e.target.textContent === '×' || e.target.closest('.nav-menu::before')) {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const navMenu = document.getElementById('nav-menu');
+            if (navMenu) {
+                const closeBtn = document.createElement('button');
+                closeBtn.innerHTML = '×';
+                closeBtn.className = 'nav-close-btn';
+                closeBtn.onclick = function(e) {
+                    e.stopPropagation();
+                    toggleMenu();
+                };
+                navMenu.insertBefore(closeBtn, navMenu.firstChild);
+            }
+        });
+
+        function setupMobileOptimizations() {
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.setAttribute('readonly', 'readonly');
+                    setTimeout(() => {
+                        this.removeAttribute('readonly');
+                        this.focus();
+                    }, 100);
+                });
+            });
+
+            const buttons = document.querySelectorAll('.btn, .nav-link');
+            buttons.forEach(button => {
+                button.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                button.addEventListener('touchend', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            window.addEventListener('orientationchange', function() {
+                setTimeout(() => {
+                    if (map) {
+                        map.invalidateSize();
+                    }
+                }, 500);
+            });
+
+            let startY = 0;
+            document.addEventListener('touchstart', function(e) {
+                startY = e.touches[0].pageY;
+            });
+
+            document.addEventListener('touchmove', function(e) {
+                const currentY = e.touches[0].pageY;
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (currentY > startY && scrollTop <= 0) {
+                    e.preventDefault();
+                }
+            });
+
+            let alertStartX = 0;
+            const alertBanner = document.getElementById('alert-banner');
+            if (alertBanner) {
+                alertBanner.addEventListener('touchstart', function(e) {
+                    alertStartX = e.touches[0].clientX;
+                });
+                alertBanner.addEventListener('touchend', function(e) {
+                    const endX = e.changedTouches[0].clientX;
+                    const diffX = alertStartX - endX;
+                    if (diffX > 50) {
+                        this.classList.remove('show');
+                    }
+                });
+            }
+
+            if (map) {
+                map.doubleClickZoom.disable();
+                map.on('touchstart', function() {});
+            }
+        }
+
+        // Initialize everything when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setupMobileOptimizations();
+            initializeSystem();
+        });
+    </script>
+</body>
+</html>

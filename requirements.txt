@@ -1,0 +1,7 @@
+flask==3.0.0
+werkzeug==3.0.0
+jinja2==3.1.2
+# sqlalchemy for ORM later (build issues)
+# pyttsx3 for TTS later (compatibility issues)
+# transformers and torch for LLM later
+# leaflet.js will be included in static files

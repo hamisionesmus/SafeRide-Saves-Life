@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="SafeRide Admin">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#2563eb">
+    <meta name="msapplication-tap-highlight" content="no">
+    <title>Admin Panel - SafeRide</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="/static/js/sweetalert2.all.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1>🔧 Admin Panel</h1>
+            <nav>
+                <div class="nav-links">
+                    <a href="/" class="nav-link">← Dashboard</a>
+                    <a href="/admin" class="nav-link">Admin Panel</a>
+                </div>
+                <div class="nav-toggle" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+        <!-- Mobile Navigation Menu -->
+        <div class="nav-menu" id="nav-menu">
+            <div class="nav-links">
+                <a href="/" class="nav-link" onclick="toggleMenu()">← Dashboard</a>
+                <a href="/admin" class="nav-link" onclick="toggleMenu()">Admin Panel</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Status -->
+        <div class="card">
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span class="status-indicator status-online"></span>
+                <span style="font-weight: 500;">Admin Panel Active - Managing {{ hazards|length if hazards else 0 }} hazards</span>
+            </div>
+        </div>
+
+        <!-- Add New Hazard -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">➕ Add New Hazard</h2>
+            </div>
+            <form id="add-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Hazard Type</label>
+                        <select name="type" class="form-input" required>
+                            <option value="">Select Type</option>
+                            <option value="blackspot">🚨 Blackspot</option>
+                            <option value="bump">⚡ Speed Bump</option>
+                            <option value="school_zone">🏫 School Zone</option>
+                            <option value="sharp_bend">🌀 Sharp Bend</option>
+                            <option value="traffic_congestion">🚦 Traffic Congestion</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Distance (meters)</label>
+                        <input type="number" name="distance" class="form-input" value="500" min="50" max="2000" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Latitude</label>
+                        <input type="number" step="any" name="lat" class="form-input" placeholder="-1.2864" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Longitude</label>
+                        <input type="number" step="any" name="lng" class="form-input" placeholder="36.8172" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <input type="text" name="description" class="form-input" placeholder="Brief description of the hazard" required>
+                </div>
+                <button type="submit" class="btn btn-success">
+                    <span id="add-btn-text">➕ Add Hazard</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Existing Hazards -->
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">📋 Existing Hazards</h2>
+                <span style="background: var(--secondary-color); color: white; padding: 0.25rem 0.5rem; border-radius: 12px; font-size: 0.75rem; font-weight: 600;">
+                    {{ hazards|length if hazards else 0 }} total
+                </span>
+            </div>
+            <div id="hazards-list">
+                {% if hazards %}
+                    {% for hazard in hazards %}
+                    <div class="hazard-item">
+                        <div class="hazard-info">
+                            <h3>
+                                {% if hazard.type == 'blackspot' %}🚨{% elif hazard.type == 'bump' %}⚡{% elif hazard.type == 'school_zone' %}🏫{% elif hazard.type == 'sharp_bend' %}🌀{% elif hazard.type == 'traffic_congestion' %}🚦{% else %}⚠️{% endif %}
+                                {{ hazard.type.replace('_', ' ')|title }}
+                            </h3>
+                            <p>{{ hazard.description }}</p>
+                            <div style="font-size: 0.875rem; color: var(--text-secondary); margin-top: 0.5rem;">
+                                📍 Lat: {{ hazard.lat }}, Lng: {{ hazard.lng }} • 📏 {{ hazard.distance }}m radius
+                            </div>
+                        </div>
+                        <div class="hazard-actions">
+                            <button class="btn btn-primary btn-small" onclick="editHazard({{ hazard.id }}, '{{ hazard.type }}', {{ hazard.lat }}, {{ hazard.lng }}, '{{ hazard.description }}', {{ hazard.distance }})">
+                                ✏️ Edit
+                            </button>
+                            <button class="btn btn-danger btn-small" onclick="deleteHazard({{ hazard.id }})">
+                                🗑️ Delete
+                            </button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div style="text-align: center; color: var(--text-secondary); padding: 3rem;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">📋</div>
+                        <h3>No hazards found</h3>
+                        <p>Add your first hazard using the form above.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Edit Modal -->
+        <div id="edit-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+            <div class="card" style="max-width: 500px; width: 90%; max-height: 90vh; overflow-y: auto;">
+                <div class="card-header">
+                    <h2 class="card-title">✏️ Edit Hazard</h2>
+                    <button onclick="closeEditModal()" style="background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-secondary);">×</button>
+                </div>
+                <form id="update-form">
+                    <input type="hidden" name="id" id="edit-id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Hazard Type</label>
+                            <select name="type" id="edit-type" class="form-input" required>
+                                <option value="blackspot">🚨 Blackspot</option>
+                                <option value="bump">⚡ Speed Bump</option>
+                                <option value="school_zone">🏫 School Zone</option>
+                                <option value="sharp_bend">🌀 Sharp Bend</option>
+                                <option value="traffic_congestion">🚦 Traffic Congestion</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Distance (meters)</label>
+                            <input type="number" name="distance" id="edit-distance" class="form-input" min="50" max="2000" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Latitude</label>
+                            <input type="number" step="any" name="lat" id="edit-lat" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Longitude</label>
+                            <input type="number" step="any" name="lng" id="edit-lng" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <input type="text" name="description" id="edit-description" class="form-input" required>
+                    </div>
+                    <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                        <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                        <button type="submit" class="btn btn-success">
+                            <span id="update-btn-text">💾 Update Hazard</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add form submission
+        document.getElementById('add-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span>⏳ Adding...</span>';
+            btn.disabled = true;
+
+            const formData = new FormData(this);
+            fetch('/admin/add', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                Swal.fire({
+                    title: '✅ Hazard Added!',
+                    text: data.status || 'Hazard has been added successfully.',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    location.reload();
+                });
+            })
+            .catch(error => {
+                Swal.fire({
+                    title: '❌ Error Adding Hazard',
+                    text: 'Failed to add hazard: ' + error.message,
+                    icon: 'error',
+                    confirmButtonText: 'Try Again'
+                });
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        });
+
+        // Edit hazard
+        function editHazard(id, type, lat, lng, description, distance) {
+            document.getElementById('edit-id').value = id;
+            document.getElementById('edit-type').value = type;
+            document.getElementById('edit-lat').value = lat;
+            document.getElementById('edit-lng').value = lng;
+            document.getElementById('edit-description').value = description;
+            document.getElementById('edit-distance').value = distance;
+            document.getElementById('edit-modal').style.display = 'flex';
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').style.display = 'none';
+        }
+
+        // Update form submission
+        document.getElementById('update-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span>⏳ Updating...</span>';
+            btn.disabled = true;
+
+            const id = document.getElementById('edit-id').value;
+            const formData = new FormData(this);
+            fetch(`/admin/update/${id}`, {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                alert(data.status || 'Hazard updated successfully!');
+                location.reload();
+            })
+            .catch(error => {
+                alert('Error updating hazard: ' + error.message);
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            });
+        });
+
+        // Delete hazard
+        function deleteHazard(id) {
+            if (confirm('🗑️ Are you sure you want to delete this hazard? This action cannot be undone.')) {
+                fetch(`/admin/delete/${id}`, {
+                    method: 'POST'
+                }).then(response => response.json())
+                .then(data => {
+                    alert(data.status || 'Hazard deleted successfully!');
+                    location.reload();
+                })
+                .catch(error => {
+                    alert('Error deleting hazard: ' + error.message);
+                });
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('edit-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEditModal();
+            }
+        });
+
+        // Mobile navigation toggle
+        function toggleMenu() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+            navToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside or on close button
+        document.addEventListener('click', function(e) {
+            const navToggle = document.querySelector('.nav-toggle');
+            const navMenu = document.getElementById('nav-menu');
+
+            // Close if clicking outside menu or on close button
+            if (navToggle && navMenu && !navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+
+            // Handle close button click (the × in top-right)
+            if (e.target.textContent === '×' || e.target.closest('.nav-menu::before')) {
+                navToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+
+        // Add click handler for the close button
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create a close button element and add it to the menu
+            const navMenu = document.getElementById('nav-menu');
+            if (navMenu) {
+                const closeBtn = document.createElement('button');
+                closeBtn.innerHTML = '×';
+                closeBtn.className = 'nav-close-btn';
+                closeBtn.onclick = function(e) {
+                    e.stopPropagation();
+                    toggleMenu();
+                };
+                navMenu.insertBefore(closeBtn, navMenu.firstChild);
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeEditModal();
+                // Also close mobile menu
+                const navToggle = document.querySelector('.nav-toggle');
+                const navMenu = document.getElementById('nav-menu');
+                if (navToggle) navToggle.classList.remove('active');
+                if (navMenu) navMenu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
